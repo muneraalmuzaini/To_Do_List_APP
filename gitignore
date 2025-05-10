@@ -1,0 +1,14 @@
+# Ignore Python cache and virtual environment
+__pycache__/
+venv/
+
+# Ignore database files
+*.db
+
+# Ignore environment variables or sensitive files
+.env
+
+# Node.js / React
+node_modules/
+build/
+dist/
