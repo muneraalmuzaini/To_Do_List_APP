@@ -48,12 +48,18 @@ npm start
 
 ## 🌐 Live Demo
 
-🔗 [View Live React App](https://glistening-sable-7fd2fc.netlify.app)
+- 🔗 [Live React App (Netlify)](https://glistening-sable-7fd2fc.netlify.app)
+- 🔗 [Flask API (Render)](https://to-do-list-app-hm0s.onrender.com/todos)
 
 ---
 
-- React frontend is hosted on **Netlify**
-- Flask backend will be hosted on **Render**
+## ✅ Technologies Used
+
+- React (frontend)
+- Flask + SQLite (backend)
+- Axios for API requests
+- Hosted with Netlify & Render
+
 
 ---
 
