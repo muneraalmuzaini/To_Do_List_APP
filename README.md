@@ -46,11 +46,14 @@ npm start
 
 ➡️ Opens at: `http://localhost:3000`
 
-## 🌐 Deployment
+## 🌐 Live Demo
 
-- React frontend can be deployed to **Netlify** or **Vercel**
-- Flask backend can be deployed to **Render** or **Railway**
-- Environment variables can be used for production URLs
+🔗 [View Live React App](https://glistening-sable-7fd2fc.netlify.app)
+
+---
+
+- React frontend is hosted on **Netlify**
+- Flask backend will be hosted on **Render**
 
 ---
 
