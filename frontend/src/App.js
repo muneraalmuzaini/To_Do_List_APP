@@ -38,6 +38,18 @@ function App() {
       setTodos(todos.filter(t => t.id !== id));
     });
   };
+  const editTodo = (todo) => {
+  const newTask = prompt('Edit task:', todo.task);
+  if (newTask && newTask.trim() !== '') {
+    axios.put(`http://127.0.0.1:5000/todos/${todo.id}`, {
+      ...todo,
+      task: newTask
+    }).then(res => {
+      setTodos(todos.map(t => t.id === todo.id ? res.data : t));
+    });
+  }
+};
+
 
   return (
     <div style={{ padding: 20, maxWidth: 600, margin: 'auto' }}>
@@ -85,6 +97,7 @@ function App() {
             todo={todo}
             onToggle={toggleComplete}
             onDelete={deleteTodo}
+            onEdit={editTodo}
           />
         ))}
       </ul>

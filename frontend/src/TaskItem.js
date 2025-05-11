@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TaskItem({ todo, onToggle, onDelete }) {
+export default function TaskItem({ todo, onToggle, onDelete, onEdit }) {
   return (
     <li
       style={{
@@ -23,6 +23,22 @@ export default function TaskItem({ todo, onToggle, onDelete }) {
       >
         {todo.task}
       </span>
+
+      <button
+        onClick={() => onEdit(todo)}
+        style={{
+          marginLeft: '10px',
+          padding: '5px 10px',
+          backgroundColor: '#3498db',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer'
+        }}
+      >
+        Edit
+      </button>
+
       <button
         onClick={() => onDelete(todo.id)}
         style={{
@@ -40,4 +56,3 @@ export default function TaskItem({ todo, onToggle, onDelete }) {
     </li>
   );
 }
-
