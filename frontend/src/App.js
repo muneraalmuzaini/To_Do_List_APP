@@ -6,6 +6,7 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [task, setTask] = useState('');
   const [message, setMessage] = useState('');
+  const [priority, setPriority] = useState('Medium');
 
   useEffect(() => {
     axios.get('http://127.0.0.1:5000/todos')
@@ -15,12 +16,13 @@ function App() {
 
   const addTodo = () => {
     if (!task.trim()) return;
-    axios.post('http://127.0.0.1:5000/todos', { task })
+    axios.post('http://127.0.0.1:5000/todos', { task, priority }) //priority
       .then(res => {
         setTodos([...todos, res.data]);
         setTask('');
         setMessage('✅ Task added!');
         setTimeout(() => setMessage(''), 2000);
+        setPriority('Medium'); // reset to default
       });
   };
 
@@ -49,6 +51,10 @@ function App() {
     });
   }
 };
+const sortTodosByPriority = (todos) => {
+  const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+  return [...todos].sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+};
 
 
   return (
@@ -61,37 +67,52 @@ function App() {
         <p style={{ color: 'green', fontWeight: 'bold' }}>{message}</p>
       )}
 
-      <div style={{ display: 'flex', marginBottom: '20px' }}>
-        <input
-          value={task}
-          onChange={e => setTask(e.target.value)}
-          placeholder="Add new task"
-          style={{
-            padding: '10px',
-            width: '100%',
-            fontSize: '16px',
-            borderRadius: '5px',
-            border: '1px solid #ccc'
-          }}
-        />
-        <button
-          onClick={addTodo}
-          style={{
-            marginLeft: '10px',
-            padding: '10px 15px',
-            backgroundColor: '#007acc',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer'
-          }}
-        >
-          Add
-        </button>
-      </div>
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+  <input
+    value={task}
+    onChange={e => setTask(e.target.value)}
+    placeholder="Add new task"
+    style={{
+      padding: '10px',
+      flex: 1,
+      fontSize: '16px',
+      borderRadius: '5px',
+      border: '1px solid #ccc'
+    }}
+  />
+  <select
+    value={priority}
+    onChange={e => setPriority(e.target.value)}
+    style={{
+      padding: '10px',
+      fontSize: '16px',
+      borderRadius: '5px',
+      border: '1px solid #ccc',
+      backgroundColor: '#f9f9f9'
+    }}
+  >
+    <option value="High">High</option>
+    <option value="Medium">Medium</option>
+    <option value="Low">Low</option>
+  </select>
+  <button
+    onClick={addTodo}
+    style={{
+      padding: '10px 15px',
+      backgroundColor: '#007acc',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+      cursor: 'pointer'
+    }}
+  >
+    Add
+  </button>
+</div>
+
 
       <ul style={{ listStyle: 'none', padding: 0 }}>
-        {todos.map(todo => (
+        {sortTodosByPriority(todos).map(todo => (
           <TaskItem
             key={todo.id}
             todo={todo}

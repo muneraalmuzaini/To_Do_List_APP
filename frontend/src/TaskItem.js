@@ -1,6 +1,19 @@
 import React from 'react';
 
 export default function TaskItem({ todo, onToggle, onDelete, onEdit }) {
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case 'High':
+        return '#e74c3c'; // Red
+      case 'Medium':
+        return '#f39c12'; // Orange
+      case 'Low':
+        return '#2ecc71'; // Green
+      default:
+        return '#95a5a6'; // Grey
+    }
+  };
+
   return (
     <li
       style={{
@@ -8,21 +21,25 @@ export default function TaskItem({ todo, onToggle, onDelete, onEdit }) {
         marginBottom: '10px',
         padding: '10px',
         borderRadius: '5px',
+        borderLeft: `6px solid ${getPriorityColor(todo.priority)}`,
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
       }}
     >
-      <span
-        onClick={() => onToggle(todo)}
-        style={{
-          textDecoration: todo.completed ? 'line-through' : 'none',
-          cursor: 'pointer',
-          flex: 1
-        }}
-      >
-        {todo.task}
-      </span>
+      <div style={{ flex: 1, cursor: 'pointer' }} onClick={() => onToggle(todo)}>
+        <div
+          style={{
+            textDecoration: todo.completed ? 'line-through' : 'none',
+            fontWeight: 'bold'
+          }}
+        >
+          {todo.task}
+        </div>
+        <div style={{ fontSize: '14px', color: getPriorityColor(todo.priority) }}>
+          Priority: {todo.priority}
+        </div>
+      </div>
 
       <button
         onClick={() => onEdit(todo)}

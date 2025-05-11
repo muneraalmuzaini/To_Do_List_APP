@@ -18,6 +18,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     task = db.Column(db.String(200), nullable=False)
     completed = db.Column(db.Boolean, default=False)
+    priority = db.Column(db.String(10), default="Medium")
 
 # Create database
 with app.app_context():
@@ -27,15 +28,19 @@ with app.app_context():
 @app.route('/todos', methods=['GET'])
 def get_todos():
     todos = Todo.query.all()
-    return jsonify([{'id': t.id, 'task': t.task, 'completed': t.completed} for t in todos])
+    return jsonify([{'id': t.id, 'task': t.task, 'completed': t.completed, 'priority': t.priority } for t in todos])
 
 @app.route('/todos', methods=['POST'])
 def add_todo():
     data = request.get_json()
-    new_todo = Todo(task=data['task'], completed=False)
+    #print("📥 Received from frontend:", data)  #تجربة
+    new_todo = Todo(
+        task=data['task'],
+        completed=False,
+        priority=data.get('priority', 'Medium') ) # priority
     db.session.add(new_todo)
     db.session.commit()
-    return jsonify({'id': new_todo.id, 'task': new_todo.task, 'completed': new_todo.completed}), 201
+    return jsonify({'id': new_todo.id, 'task': new_todo.task, 'completed': new_todo.completed, 'priority': new_todo.priority}), 201
 
 @app.route('/todos/<int:todo_id>', methods=['PUT'])
 def update_todo(todo_id):
@@ -43,8 +48,9 @@ def update_todo(todo_id):
     todo = Todo.query.get_or_404(todo_id)
     todo.task = data.get('task', todo.task)
     todo.completed = data.get('completed', todo.completed)
+    todo.priority = data.get('priority', todo.priority) # priority
     db.session.commit()
-    return jsonify({'id': todo.id, 'task': todo.task, 'completed': todo.completed})
+    return jsonify({'id': todo.id, 'task': todo.task, 'completed': todo.completed,  'priority': todo.priority})
 
 @app.route('/todos/<int:todo_id>', methods=['DELETE'])
 def delete_todo(todo_id):
