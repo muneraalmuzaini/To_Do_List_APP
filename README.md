@@ -14,7 +14,9 @@ Built using React for the frontend, Flask for the backend, and SQLite for persis
 
 ## ✅ Features
 
-- ✅ Add, complete, and delete tasks
+- ➕ Add tasks with **priority levels** (High, Medium, Low)
+- ✅ Mark tasks as completed or edit/delete them
+- 🎨 Color-coded tasks based on priority
 - 💾 Persistent storage using SQLite
 - 🔄 Full CRUD API integration with React using Axios
 - 🗂️ Clean folder structure (backend + frontend)
